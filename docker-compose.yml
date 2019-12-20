@@ -2,29 +2,33 @@ version: '3'
 
 services:
 
+  php:
+    container_name: crud_app
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    volumes:
+      - ./source:/source
+    depends_on:
+      - db
+
   nginx:
     container_name: crud_webserver
     image: nginx
     ports:
       - "8080:80"
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./source:/source
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - php
-
-  php:
-    container_name: crud_app
-    build: php
-    volumes:
-      - ../source:/app
-    depends_on:
-      - db
 
   db:
     container_name: crud_db
     image: mysql:8.0
     volumes:
-      - ./mysql/config.cnf:/etc/mysql/conf.d/config.cnf
+      - /var/lib/mysql
+      - ./docker/mysql/config.cnf:/etc/mysql/conf.d/config.cnf
     ports:
       - 3306:3306
     environment:
