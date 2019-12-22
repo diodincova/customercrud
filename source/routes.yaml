@@ -1,0 +1,24 @@
+index:
+  path: /
+  controller: App\Infrastructure\Http\Web\IndexController::index
+  methods: GET
+RestCreate:
+  path: /rest/customer
+  controller: App\Infrastructure\Http\Rest\RestCustomerController::add
+  methods: POST
+RestRead:
+  path: /rest/customer/{id}
+  controller: App\Infrastructure\Http\Rest\RestCustomerController::get
+  methods: GET
+RestUpdate:
+  path: /rest/customer/{id}
+  controller: App\Infrastructure\Http\Rest\RestCustomerController::update
+  methods: PUT
+RestDelete:
+  path: /rest/customer/{id}
+  controller: App\Infrastructure\Http\Rest\RestCustomerController::delete
+  methods: DELETE
+RestList:
+  path: /rest/customer
+  controller: App\Infrastructure\Http\Rest\RestCustomerController::list
+  methods: GET
