@@ -6,7 +6,7 @@ down:
 build:
 	docker-compose -f docker-compose.yml build --no-cache
 migrate:
-	docker-compose -f docker-compose.yml exec -T php vendor/bin/doctrine-migrations migrate --no-interaction --allow-no-migration
+	docker-compose -f docker-compose.yml exec -T php sh/wait-for-it.sh db:3306 -- vendor/bin/doctrine-migrations migrate
 fixtures:
 	docker-compose -f docker-compose.yml exec -T php bin/fixtures
 composer:

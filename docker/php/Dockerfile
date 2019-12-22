@@ -1,7 +1,5 @@
 FROM php:fpm
 
-COPY ./wait-for-it.sh /wait-for-it.sh
-
 # Install modules
 RUN apt-get update && apt-get install -y \
         git \
