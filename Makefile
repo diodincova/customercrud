@@ -1,4 +1,4 @@
-create: up composer migrate
+create: up composer migrate fixtures
 up:
 	docker-compose -f docker-compose.yml up --build --force-recreate -d
 down:
