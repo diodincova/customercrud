@@ -36,3 +36,11 @@ services:
       MYSQL_DATABASE: crud
       MYSQL_USER: crud
       MYSQL_PASSWORD: secret
+
+  migration:
+    image: php:latest
+    command: ["./wait-for-it.sh", "db:3306", "--", "echo", "db is up"]
+    links:
+      - db
+    depends_on:
+      - db
