@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\DataFixtures\Loader;
+use App\Infrastructure\Fixture\CustomerFixtureLoader;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+
+set_time_limit(0);
+
+require dirname(__DIR__).'/vendor/autoload.php';
+require dirname(__DIR__).'/helpers.php';
+
+$entityManager = app(EntityManagerInterface::class);
+$fixtureLoader = new Loader();
+$fixtureLoader->addFixture(new CustomerFixtureLoader());
+$purger = new ORMPurger();
+$executor = new ORMExecutor($entityManager, $purger);
+$executor->execute($fixtureLoader->getFixtures());
