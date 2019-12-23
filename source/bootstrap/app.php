@@ -11,6 +11,8 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 require dirname(__DIR__).'/vendor/autoload.php';
 require dirname(__DIR__).'/helpers.php';
@@ -26,6 +28,15 @@ $dispatcher->addSubscriber(new RouterListener($matcher, new RequestStack()));
 
 $request = Request::createFromGlobals();
 $kernel = new HttpKernel($dispatcher, new ControllerResolver(), new RequestStack(), new ArgumentResolver());
-$response = $kernel->handle($request);
+
+try {
+    $response = $kernel->handle($request);
+} catch (Exception $e) {
+    $response = new JsonResponse(
+        [ 'status' => Response::HTTP_NOT_FOUND, 'errors' => ['Route not found'], 'data' => [] ],
+        Response::HTTP_NOT_FOUND
+    );
+}
+
 $response->send();
 $kernel->terminate($request, $response);

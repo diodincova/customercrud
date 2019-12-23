@@ -16,7 +16,7 @@ services:
     container_name: crud_webserver
     image: nginx
     ports:
-      - "8080:80"
+      - 8080:80
     volumes:
       - ./source:/source
       - ./docker/nginx/conf.d:/etc/nginx/conf.d

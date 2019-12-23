@@ -10,14 +10,20 @@ RestRead:
   path: /rest/customer/{id}
   controller: App\Infrastructure\Http\Rest\RestCustomerController::get
   methods: GET
+  requirements:
+    id: '\d+'
 RestUpdate:
   path: /rest/customer/{id}
   controller: App\Infrastructure\Http\Rest\RestCustomerController::update
   methods: PUT
+  requirements:
+    id: '\d+'
 RestDelete:
   path: /rest/customer/{id}
   controller: App\Infrastructure\Http\Rest\RestCustomerController::delete
   methods: DELETE
+  requirements:
+    id: '\d+'
 RestList:
   path: /rest/customer
   controller: App\Infrastructure\Http\Rest\RestCustomerController::list
