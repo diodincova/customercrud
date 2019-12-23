@@ -37,7 +37,13 @@ final class CustomerService
      */
     public function getAllCustomers(): ?array
     {
-        return $this->customerRepository->findAll();
+        $customers = [];
+
+        foreach ($this->customerRepository->findAll() as $customer) {
+            $customers[] = $customer->extract();
+        }
+
+        return $customers;
     }
 
     public function addCustomer(string $name, bool $isActive, string $email): array
