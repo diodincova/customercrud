@@ -14,19 +14,22 @@ final class CustomerService
 
     /**
      * CustomerService constructor.
+     * @param CustomerRepositoryInterface $customerRepository
      */
-    public function __construct()
+    public function __construct(CustomerRepositoryInterface $customerRepository)
     {
-        $this->customerRepository = app(CustomerRepositoryInterface::class);
+        $this->customerRepository = $customerRepository;
     }
 
     /**
      * @param int $customerId
-     * @return Customer|null
+     * @return array|null
      */
-    public function getCustomer(int $customerId): ?Customer
+    public function getCustomer(int $customerId): ?array
     {
-        return $this->customerRepository->findById($customerId);
+        $customer = $this->customerRepository->findById($customerId);
+
+        return $customer ? $customer->extract() : null;
     }
 
     /**
@@ -37,13 +40,7 @@ final class CustomerService
         return $this->customerRepository->findAll();
     }
 
-    /**
-     * @param string $name
-     * @param bool $isActive
-     * @param string $email
-     * @return Customer
-     */
-    public function addCustomer(string $name, bool $isActive, string $email): Customer
+    public function addCustomer(string $name, bool $isActive, string $email): array
     {
         $customer = new Customer();
 
@@ -53,7 +50,7 @@ final class CustomerService
 
         $this->customerRepository->save($customer);
 
-        return $customer;
+        return $customer->extract();
     }
 
     /**
@@ -61,9 +58,9 @@ final class CustomerService
      * @param string $name
      * @param bool $isActive
      * @param string $email
-     * @return Customer|null
+     * @return array|null
      */
-    public function updateCustomer(int $customerId, string $name, bool $isActive, string $email): ?Customer
+    public function updateCustomer(int $customerId, string $name, bool $isActive, string $email): ?array
     {
         $customer = $this->customerRepository->findById($customerId);
 
@@ -77,7 +74,7 @@ final class CustomerService
 
         $this->customerRepository->save($customer);
         
-        return $customer;
+        return $customer->extract();
     }
 
     /**

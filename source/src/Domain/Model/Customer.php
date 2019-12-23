@@ -55,7 +55,7 @@ class Customer
     }
 
     /** @param mixed $isActive */
-    public function setIsActive(int $isActive): void
+    public function setIsActive(bool $isActive): void
     {
         $this->isActive = $isActive;
     }

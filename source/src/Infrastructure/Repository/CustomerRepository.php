@@ -11,7 +11,7 @@ use Doctrine\Persistence\ObjectRepository;
  * Class CustomerRepository
  * @package App\Infrastructure\Repository
  */
-final class CustomerRepository implements CustomerRepositoryInterface
+class CustomerRepository implements CustomerRepositoryInterface
 {
     /** @var EntityManagerInterface */
     private $entityManager;
@@ -19,10 +19,13 @@ final class CustomerRepository implements CustomerRepositoryInterface
     /** @var ObjectRepository */
     private $objectRepository;
 
-    /** CustomerRepository constructor. */
-    public function __construct()
+    /**
+     * CustomerRepository constructor.
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->entityManager = app(EntityManagerInterface::class);
+        $this->entityManager = $entityManager;
         $this->objectRepository = $this->entityManager->getRepository(Customer::class);
     }
 
