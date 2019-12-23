@@ -1,0 +1,206 @@
+openapi: 3.0.0
+info:
+  title: Customer CRUD REST API
+  description: test case
+  contact:
+    name: Diana Kuzmina
+    email: di_07@inbox.ru
+  version: 1.0.0
+servers:
+- url: https://app.swaggerhub.com/apis/dianakuzmina/customer_crud/1.0.0#/
+  description: SwaggerHub API Auto Mocking
+paths:
+  /rest/customer/{id}:
+    get:
+      tags:
+      - Customer
+      summary: Read customer
+      parameters:
+      - name: id
+        in: path
+        description: Customer id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    put:
+      tags:
+      - Customer
+      summary: Update customer
+      parameters:
+      - name: id
+        in: path
+        description: Customer id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 1
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/body'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+    delete:
+      tags:
+      - Customer
+      summary: Delete customer
+      parameters:
+      - name: id
+        in: path
+        description: Customer id
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          example: 1
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+  /rest/customer:
+    get:
+      tags:
+      - Customer
+      summary: Customers list
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseList'
+    post:
+      tags:
+      - Customer
+      summary: Create customer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/body_1'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+components:
+  schemas:
+    ApiResponse:
+      properties:
+        status:
+          type: integer
+          example: 201
+        data:
+          $ref: '#/components/schemas/ApiResponseData'
+        errors:
+          type: array
+          items:
+            type: string
+            example: This value is not a valid email address.
+      description: Delivery report
+    ApiResponseData:
+      properties:
+        name:
+          type: string
+          description: Customer name
+          example: Olaf Olafer
+        email:
+          type: string
+          description: Customer email
+          example: example@example.com
+        isActive:
+          type: boolean
+          description: Customer activity
+          example: true
+      description: Delivery data
+    ApiResponseList:
+      properties:
+        status:
+          type: integer
+          example: 200
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiResponseListData'
+        errors:
+          type: array
+          example: []
+      description: List delivery report
+    ApiResponseListData:
+      properties:
+        name:
+          type: string
+          description: Customer name
+          example: Olaf Olafer
+        email:
+          type: string
+          description: Customer email
+          example: example@example.com
+        isActive:
+          type: boolean
+          description: Customer activity
+          example: true
+      description: List delivery data
+    body:
+      properties:
+        name:
+          type: string
+          description: Customer name
+          example: Olaf
+        email:
+          type: string
+          description: Customer email
+          example: example@example.com
+        isActive:
+          type: string
+          description: Customer email
+          example: true|false
+    inline_response_200:
+      properties:
+        status:
+          type: integer
+          example: 200
+        data:
+          type: array
+          example: []
+        errors:
+          type: array
+          example: []
+    body_1:
+      properties:
+        name:
+          type: string
+          description: Customer name
+          example: Olaf
+        email:
+          type: string
+          description: Customer email
+          example: example@example.com
+        isActive:
+          type: string
+          description: Customer email
+          example: true|false
